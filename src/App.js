@@ -1,12 +1,12 @@
 import React, { Component } from "react"
-import Search from "./components/search"
+import Search from "./components/Search"
 
 class App extends Component {
   render() {
     return (
-      <div>
+      <React.Fragment>
         <Search />
-      </div>
+      </React.Fragment>
     )
   }
 }

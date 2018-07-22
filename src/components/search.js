@@ -7,7 +7,7 @@ class Search extends Component {
     return (
       <div className="container">
         <header>
-          <img src={logo} alt="Foodie Logo" />
+          <img src={logo} alt="Foodie Logo" className="center " />
         </header>
 
         <button type="button" className="red center capital">
