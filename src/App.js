@@ -1,22 +1,19 @@
 import React, { Component } from "react"
-<<<<<<< HEAD
+import { BrowserRouter, Route } from "react-router-dom"
 import Search from "./components/Search"
-=======
-import Search from "./components/search"
->>>>>>> home page search component
+import Result from "./components/Result"
 
 class App extends Component {
   render() {
     return (
-<<<<<<< HEAD
-      <React.Fragment>
-        <Search />
-      </React.Fragment>
-=======
       <div>
-        <Search />
+        <BrowserRouter>
+          <div>
+            <Route path="/" component={Search} exact />
+            <Route path="/results" component={Result} />
+          </div>
+        </BrowserRouter>
       </div>
->>>>>>> home page search component
     )
   }
 }

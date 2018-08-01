@@ -1,5 +1,9 @@
 import React, { Component } from "react"
+
+import { Link } from "react-router-dom"
+
 import logo from "../imgs/foodieLogo.png"
+
 import "../css/custom.css"
 
 class Search extends Component {
@@ -11,7 +15,7 @@ class Search extends Component {
         </header>
 
         <button type="button" className="red center capital">
-          Find Food!
+          <Link to="/results">Find Food!</Link>
         </button>
       </div>
     )
