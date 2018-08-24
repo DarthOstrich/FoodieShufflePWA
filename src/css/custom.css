@@ -21,6 +21,10 @@ html {
 button {
   padding: 20px;
   border-radius: 5px;
+<<<<<<< HEAD
+=======
+  color: #f2f2f2;
+>>>>>>> Homepage Fixes
   font-size: 1.4rem;
   letter-spacing: 2px;
 }
