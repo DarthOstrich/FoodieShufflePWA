@@ -1,16 +1,11 @@
-import React, { Component } from "react"
-<<<<<<< HEAD
-import { BrowserRouter, Route } from "react-router-dom"
-import Search from "./components/Search"
-import Result from "./components/Result"
-=======
-import Search from "./components/Search"
->>>>>>> Homepage Fixes
+import React, { Component } from 'react';
+import { BrowserRouter, Route } from 'react-router-dom';
+import Search from './components/Search';
+import Result from './components/Result';
 
 class App extends Component {
   render() {
     return (
-<<<<<<< HEAD
       <div>
         <BrowserRouter>
           <div>
@@ -19,13 +14,8 @@ class App extends Component {
           </div>
         </BrowserRouter>
       </div>
-=======
-      <React.Fragment>
-        <Search />
-      </React.Fragment>
->>>>>>> Homepage Fixes
-    )
+    );
   }
 }
 
-export default App
+export default App;
