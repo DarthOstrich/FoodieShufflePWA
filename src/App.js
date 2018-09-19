@@ -6,14 +6,14 @@ import Result from './components/Result';
 class App extends Component {
   render() {
     return (
-      <div>
+      <React.Fragment>
         <BrowserRouter>
           <div>
             <Route path="/" component={Search} exact />
             <Route path="/results" component={Result} />
           </div>
         </BrowserRouter>
-      </div>
+      </React.Fragment>
     );
   }
 }
