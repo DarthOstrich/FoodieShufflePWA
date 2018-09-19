@@ -1,11 +1,15 @@
-import React, { Component } from "react"
+import React, { Component } from 'react';
 
 class Result extends Component {
   render() {
     return (
       <div>
         <h1>Results page</h1>
-        <img src="http://via.placeholder.com/400x150" alt="" class="center" />
+        <img
+          src="http://via.placeholder.com/400x150"
+          alt=""
+          className="center"
+        />
         <div>
           <h2>Restaurant Title</h2>
           <p>Stars</p>
@@ -19,8 +23,8 @@ class Result extends Component {
           Reshuffle
         </button>
       </div>
-    )
+    );
   }
 }
 
-export default Result
+export default Result;

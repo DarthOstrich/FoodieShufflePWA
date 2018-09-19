@@ -8,10 +8,10 @@ class App extends Component {
     return (
       <React.Fragment>
         <BrowserRouter>
-          <div>
+          <React.Fragment>
             <Route path="/" component={Search} exact />
             <Route path="/results" component={Result} />
-          </div>
+          </React.Fragment>
         </BrowserRouter>
       </React.Fragment>
     );
