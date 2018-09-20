@@ -6,19 +6,24 @@ const Loading = () => {
 
 const Result = props => {
   const { restaurant } = props
-  // debugger
-  // const result = randomizer(results)
+  const { photos, name, rating, types } = restaurant
+  console.log(restaurant)
+
   return (
     <div>
-      <h1>Results page</h1>
-      <img src="http://via.placeholder.com/400x150" alt="" className="center" />
+      <img
+        src={photos[0].getUrl() || null}
+        alt=""
+        className="center"
+        style={{ maxWidth: '100%' }}
+      />
       <div>
-        <h2>{restaurant.name}</h2>
-        <p>{restaurant.rating}</p>
+        <h2>{name}</h2>
+        <p>{rating}</p>
         <p>Category</p>
         <ul>
-          {restaurant.types.map(type => (
-            <li>{type}</li>
+          {types.map(type => (
+            <li key={type}>{type}</li>
           ))}
         </ul>
       </div>
