@@ -9,14 +9,11 @@ const Result = props => {
   const { photos, name, rating, types } = restaurant
   console.log(restaurant)
 
+  const image = photos ? photos[0].getUrl() : null
+
   return (
     <div>
-      <img
-        src={photos[0].getUrl() || null}
-        alt=""
-        className="center"
-        style={{ maxWidth: '100%' }}
-      />
+      <img src={image} alt="" className="center" style={{ maxWidth: '100%' }} />
       <div>
         <h2>{name}</h2>
         <p>{rating}</p>
