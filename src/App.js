@@ -5,14 +5,16 @@ import Results from './components/Results'
 
 class App extends Component {
   state = {
-    location: {}
+    location: {},
+    loading: true
   }
   async componentDidMount() {
     try {
       await navigator.geolocation.getCurrentPosition(position => {
-        console.log(position)
+        let { latitude, longitude } = position.coords
+        console.log('coords ready')
 
-        this.setState({ location: {} })
+        this.setState({ location: { latitude, longitude }, loading: false })
       })
     } catch (error) {
       this.setState({ error })
@@ -20,12 +22,17 @@ class App extends Component {
     }
   }
   render() {
-    const { location } = this.state
+    const { location, loading } = this.state
     return (
       <React.Fragment>
         <BrowserRouter>
           <React.Fragment>
-            <Route path="/" component={Search} exact />
+            {loading ? (
+              <div>Getting Location Data...</div>
+            ) : (
+              <Route path="/" component={Search} exact />
+            )}
+
             <Route
               path="/results"
               render={routeProps => (

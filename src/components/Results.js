@@ -1,35 +1,47 @@
 import React, { Component } from 'react'
+import placeholder from '../imgs/placeholder.svg'
 
-const Loading = () => {
-  return <div>Loading...</div>
-}
+// const Loading = () => {
+//   return <div>Loading...</div>
+// }
 
 const Result = props => {
-  const { restaurant } = props
-  const { photos, name, rating, types } = restaurant
-  console.log(restaurant)
+  const { restaurant: r } = props
+  // console.log(r)
+  // const { photos, name, rating, types } = restaurant
 
-  const image = photos ? photos[0].getUrl() : null
+  const image = r.photos ? r.photos[0].getUrl() : placeholder
 
   return (
     <div>
-      <img src={image} alt="" className="center" style={{ maxWidth: '100%' }} />
+      <div
+        style={{
+          height: '400px',
+          overflow: 'hidden',
+          backgroundImage: `url('${image}')`,
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center',
+          backgroundSize: 'cover'
+        }}
+      >
+        {/* <img
+          src={image}
+          alt=""
+          className="center"
+          style={{ maxWidth: '100%' }}
+        /> */}
+      </div>
       <div>
-        <h2>{name}</h2>
-        <p>{rating}</p>
+        <h2>{r.name || 'Name'}</h2>
+        <p>{r.rating || 'Rating'}</p>
         <p>Category</p>
         <ul>
-          {types.map(type => (
-            <li key={type}>{type}</li>
-          ))}
+          {r.types ? r.types.map(type => <li key={type}>{type}</li>) : 'Types'}
         </ul>
       </div>
 
       <button type="button" className="red center capital">
         Let's Go!
-      </button>
-      <button className="red center capital" type="button">
-        Reshuffle
       </button>
     </div>
   )
@@ -44,17 +56,25 @@ class Results extends Component {
   }
   randomizer(restaurants) {
     const limit = restaurants.length
-    const num = Math.floor(Math.random() * limit) + 1
+    const num = Math.floor(Math.random() * limit)
     return restaurants[num]
   }
+  reShuffle = () => {
+    this.setState({ loading: true })
+    const single = this.randomizer(this.state.results)
+    this.setState({ loading: false, single })
+  }
   async componentDidMount() {
+    const { history } = this.props
     let map
     // let results
     const { google } = window
     const { places } = window.google.maps
+    const { latitude, longitude } = this.props.location
 
     // define location
-    const location = new google.maps.LatLng(-33.8617374, 151.2021291)
+    // const location = new google.maps.LatLng(-33.8617374, 151.2021291)
+    const location = new google.maps.LatLng(latitude, longitude)
 
     // make a fake map...
     let newDiv = document.createElement('div')
@@ -66,54 +86,38 @@ class Results extends Component {
     // define the parameters
     const request = {
       location,
-      radius: '500',
+      radius: '1000',
       type: ['restaurant']
     }
     const service = new places.PlacesService(map)
     try {
       await service.nearbySearch(request, (res, status) => {
         if (status !== 'OK') {
-          throw new Error('Server Error')
+          // throw new Error('Server Error')
+          history.push('/')
+          return
         }
         const single = this.randomizer(res)
         this.setState({ loading: false, results: res, single: single })
       })
     } catch (error) {
+      history.push('/')
       throw new Error(error)
+      return
     }
-
-    // debugger
-    // document.getElementById('root').removeChild(document.getElementById('map'))
-
-    // None of this garbage works
-    // The following example shows a Find Place request for "Mongolian Grill", using the locationbias parameter to prefer results within 2000 meters of the specified coordinates:
-    // https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=1500&type=restaurant&keyword=cruise&key=YOUR_API_KEY
-    // const url = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=Museum%20of%20Contemporary%20Art%20Australia&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key=AIzaSyDRPoz4JUCtwM1pFr8K2t07DbdvoEi33i0`
-    // const options = {
-    //   method: 'GET',
-    //   mode: 'no-cors',
-    //   headers: {
-    //     'Content-Type': 'application/json; charset=utf-8'
-    //   }
-    // }
-    // const places = await fetch(url)
-    //   .then(res => {
-    //     console.log(res)
-    //     return res
-    //   })
-    //   .then(json => {
-    //     console.log(json)
-    //   })
-    //   .catch(err => {
-    //     console.error(err)
-    //   })
-    // this.setState({ result: places, loading: false })
   }
   render() {
     let { single, loading } = this.state
     return (
       <div id="map">
-        {loading ? <Loading /> : <Result restaurant={single} />}
+        {<Result restaurant={single} />}
+        <button
+          className="red center capital"
+          type="button"
+          onClick={this.reShuffle}
+        >
+          Reshuffle
+        </button>
       </div>
     )
   }
