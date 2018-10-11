@@ -1,10 +1,10 @@
-import React, { Component } from "react"
+import React, { Component } from 'react'
 
-import { Link } from "react-router-dom"
+import { Link } from 'react-router-dom'
 
-import logo from "../imgs/foodieLogo.png"
+import logo from '../imgs/foodieLogo.png'
 
-import "../css/custom.css"
+import '../css/custom.css'
 
 class Search extends Component {
   render() {
