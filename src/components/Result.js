@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import placeholder from '../imgs/placeholder.svg'
 
 const Result = props => {
