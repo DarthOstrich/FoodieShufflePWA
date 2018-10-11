@@ -1,62 +1,23 @@
 import React, { Component } from 'react'
-import placeholder from '../imgs/placeholder.svg'
+import Result from './Result'
 
 // const Loading = () => {
 //   return <div>Loading...</div>
 // }
 
-const Result = props => {
-  const { restaurant: r } = props
-  // console.log(r)
-  // const { photos, name, rating, types } = restaurant
-
-  const image = r.photos ? r.photos[0].getUrl() : placeholder
-
-  return (
-    <div>
-      <div
-        style={{
-          height: '400px',
-          overflow: 'hidden',
-          backgroundImage: `url('${image}')`,
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center',
-          backgroundSize: 'cover'
-        }}
-      >
-        {/* <img
-          src={image}
-          alt=""
-          className="center"
-          style={{ maxWidth: '100%' }}
-        /> */}
-      </div>
-      <div>
-        <h2>{r.name || 'Name'}</h2>
-        <p>{r.rating || 'Rating'}</p>
-        <p>Category</p>
-        <ul>
-          {r.types ? r.types.map(type => <li key={type}>{type}</li>) : 'Types'}
-        </ul>
-      </div>
-
-      <button type="button" className="red center capital">
-        Let's Go!
-      </button>
-    </div>
-  )
-}
-
 class Results extends Component {
   state = {
     results: {},
     single: {},
+    nextPageToken: null,
     loading: true,
     error: null
   }
   randomizer(restaurants) {
     const limit = restaurants.length
     const num = Math.floor(Math.random() * limit)
+    console.log(num)
+
     return restaurants[num]
   }
   reShuffle = () => {
@@ -66,6 +27,7 @@ class Results extends Component {
   }
   async componentDidMount() {
     const { history } = this.props
+    const { nextPageToken } = this.state
     let map
     // let results
     const { google } = window
@@ -80,30 +42,40 @@ class Results extends Component {
     let newDiv = document.createElement('div')
     map = new google.maps.Map(newDiv, {
       center: location,
-      zoom: 15
+      zoom: 10
     })
 
     // define the parameters
+    // other options https://developers.google.com/places/web-service/search
+    // minprice maxprice
+
     const request = {
       location,
-      radius: '1000',
-      type: ['restaurant']
+      radius: '1500',
+      opennow: true,
+      minPrice: 2,
+      type: ['restaurant'],
+      pagetoken: nextPageToken ? nextPageToken : null
     }
     const service = new places.PlacesService(map)
     try {
-      await service.nearbySearch(request, (res, status) => {
+      await service.nearbySearch(request, (res, status, next_page_token) => {
         if (status !== 'OK') {
           // throw new Error('Server Error')
           history.push('/')
           return
         }
         const single = this.randomizer(res)
-        this.setState({ loading: false, results: res, single: single })
+        this.setState({
+          loading: false,
+          results: res,
+          single: single,
+          nextPageToken: next_page_token
+        })
       })
     } catch (error) {
       history.push('/')
       throw new Error(error)
-      return
     }
   }
   render() {
