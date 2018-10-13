@@ -18,22 +18,26 @@ class Results extends Component {
     const num = Math.floor(Math.random() * limit)
     console.log(num)
 
-    return restaurants[num]
+    return [restaurants[num], num]
   }
   reShuffle = () => {
+    // slowly remove all the items
+    // if zero items, go to page two using the nextPageToken
     this.setState({ loading: true })
-    const single = this.randomizer(this.state.results)
-    this.setState({ loading: false, single })
+    const [single, num] = this.randomizer(this.state.results)
+    // debugger
+    // somehow this will work...
+    const newResults = this.state.results.filter(e => {
+      return e !== num
+    })
+    this.setState({ loading: false, results: newResults, single })
   }
-  async componentDidMount() {
+  getResults = async (latitude, longitude, nextPageToken) => {
     const { history } = this.props
-    const { nextPageToken } = this.state
     let map
     // let results
     const { google } = window
     const { places } = window.google.maps
-    const { latitude, longitude } = this.props.location
-
     // define location
     // const location = new google.maps.LatLng(-33.8617374, 151.2021291)
     const location = new google.maps.LatLng(latitude, longitude)
@@ -65,7 +69,7 @@ class Results extends Component {
           history.push('/')
           return
         }
-        const single = this.randomizer(res)
+        const [single, num] = this.randomizer(res)
         this.setState({
           loading: false,
           results: res,
@@ -77,6 +81,12 @@ class Results extends Component {
       history.push('/')
       throw new Error(error)
     }
+  }
+  async componentDidMount() {
+    const { latitude, longitude } = this.props.location
+    const { nextPageToken } = this.state
+
+    await this.getResults(latitude, longitude, nextPageToken)
   }
   render() {
     let { single, loading } = this.state

@@ -14,6 +14,7 @@ class App extends Component {
       await navigator.geolocation.getCurrentPosition(position => {
         let { latitude, longitude } = position.coords
         // console.log('coords ready')
+        // debugger
 
         this.setState({ location: { latitude, longitude }, loading: false })
       })
