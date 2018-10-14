@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { BrowserRouter, Route } from 'react-router-dom'
 import Search from './components/Search'
 import Results from './components/Results'
+import Loading from './components/Loading'
 
 class App extends Component {
   state = {
@@ -12,7 +13,8 @@ class App extends Component {
     try {
       await navigator.geolocation.getCurrentPosition(position => {
         let { latitude, longitude } = position.coords
-        console.log('coords ready')
+        // console.log('coords ready')
+        // debugger
 
         this.setState({ location: { latitude, longitude }, loading: false })
       })
@@ -28,7 +30,7 @@ class App extends Component {
         <BrowserRouter>
           <React.Fragment>
             {loading ? (
-              <div>Getting Location Data...</div>
+              <Loading />
             ) : (
               <Route path="/" component={Search} exact />
             )}
