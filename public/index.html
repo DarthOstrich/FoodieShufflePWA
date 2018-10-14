@@ -15,16 +15,6 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
   <!-- google maps API Library -->
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRPoz4JUCtwM1pFr8K2t07DbdvoEi33i0&libraries=places"></script>
-  <script type="text/javascript">
-    (function () {
-      if (window.CHITIKA === undefined) { window.CHITIKA = { 'units': [] }; };
-      var unit = { "calltype": "async[2]", "publisher": "jnutt", "width": 320, "height": 50, "sid": "Chitika Default" };
-      var placement_id = window.CHITIKA.units.length;
-      window.CHITIKA.units.push(unit);
-      document.write('<div id="chitikaAdBlock-' + placement_id + '"></div>');
-    }());
-  </script>
-  <script type="text/javascript" src="//cdn.chitika.net/getads.js" async></script>
   <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -42,11 +32,16 @@
     You need to enable JavaScript to run this app.
   </noscript>
   <div id="root"></div>
-  <script>
-    (adsbygoogle = window.adsbygoogle || []).push({
-      google_ad_client: "ca-pub-6808159109485898",
-      enable_page_level_ads: true
-    });
+  <script type="text/javascript">
+    (function () {
+      if (window.CHITIKA === undefined) { window.CHITIKA = { 'units': [] }; };
+      var unit = { "calltype": "async[2]", "publisher": "jnutt", "width": 320, "height": 50, "sid": "Chitika Default" };
+      var placement_id = window.CHITIKA.units.length;
+      window.CHITIKA.units.push(unit);
+      document.write('<div id="chitikaAdBlock-' + placement_id + '"></div>');
+    }());
+  </script>
+  <script type="text/javascript" src="//cdn.chitika.net/getads.js" async></script>
   </script>
 </body>
 
