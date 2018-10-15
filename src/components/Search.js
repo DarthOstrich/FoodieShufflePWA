@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 
 import logo from '../imgs/foodieLogo.png'
 
+import loader from '../imgs/random-arrows.gif'
 import '../css/custom.css'
 
 class Search extends Component {
