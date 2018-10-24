@@ -18,6 +18,23 @@ class Search extends Component {
         <button type="button" className="red center capital">
           <Link to="/results">Find Food!</Link>
         </button>
+        <footer style={{ textAlign: 'center', padding: '40px' }}>
+          <h4 style={{ marginBottom: '20px' }}>
+            Want to help support development of this app?
+          </h4>
+          <a href="https://www.buymeacoffee.com/AXwyIxz1C" target="_blank">
+            <img
+              src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png"
+              alt="Buy Me A Coffee"
+              style={{
+                height: 'auto !important',
+                width: 'auto',
+                textAlign: 'center'
+              }}
+            />
+          </a>
+          {/* <h4 style={{ marginBottom: '20px' }}>Have a feature suggestion?</h4> */}
+        </footer>
       </div>
     )
   }
