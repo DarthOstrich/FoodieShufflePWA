@@ -9,6 +9,7 @@ class Results extends Component {
   state = {
     results: {},
     single: {},
+    endResults: false,
     nextPageToken: null,
     loading: true,
     error: null
@@ -16,7 +17,6 @@ class Results extends Component {
   randomizer(restaurants) {
     const limit = restaurants.length
     const num = Math.floor(Math.random() * limit)
-    console.log(num)
 
     return [restaurants[num], num]
   }
@@ -24,12 +24,16 @@ class Results extends Component {
     // slowly remove all the items
     // if zero items, go to page two using the nextPageToken
     this.setState({ loading: true })
-    const [single, num] = this.randomizer(this.state.results)
-    // debugger
+    const [single] = this.randomizer(this.state.results)
     // somehow this will work...
     const newResults = this.state.results.filter(e => {
-      return e !== num
+      return e.id !== single.id
     })
+    if (newResults.length == 0) {
+      this.setState({ endResults: true })
+      return
+    }
+    // console.log(newResults)
     this.setState({ loading: false, results: newResults, single })
   }
   getResults = async (latitude, longitude, nextPageToken) => {
@@ -46,7 +50,7 @@ class Results extends Component {
     let newDiv = document.createElement('div')
     map = new google.maps.Map(newDiv, {
       center: location,
-      zoom: 10
+      zoom: 15
     })
 
     // define the parameters
@@ -55,7 +59,7 @@ class Results extends Component {
 
     const request = {
       location,
-      radius: '1500',
+      radius: '2500',
       opennow: true,
       minPrice: 2,
       type: ['restaurant'],
@@ -69,10 +73,13 @@ class Results extends Component {
           history.push('/')
           return
         }
-        const [single, num] = this.randomizer(res)
+        const [single] = this.randomizer(res)
+        const results = res.filter(e => {
+          return e.id !== single.id
+        })
         this.setState({
           loading: false,
-          results: res,
+          results,
           single: single,
           nextPageToken: next_page_token
         })
@@ -89,17 +96,21 @@ class Results extends Component {
     await this.getResults(latitude, longitude, nextPageToken)
   }
   render() {
-    let { single, loading } = this.state
+    let { single, loading, endResults } = this.state
     return (
       <div id="map">
         {<Result restaurant={single} />}
-        <button
-          className="red center capital"
-          type="button"
-          onClick={this.reShuffle}
-        >
-          Reshuffle
-        </button>
+        {endResults ? (
+          <div>No more results!</div>
+        ) : (
+          <button
+            className="red center capital"
+            type="button"
+            onClick={this.reShuffle}
+          >
+            Reshuffle
+          </button>
+        )}
       </div>
     )
   }
