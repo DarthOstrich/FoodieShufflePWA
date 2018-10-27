@@ -5,6 +5,15 @@ html {
   font-family: "Open Sans", sans-serif;
 }
 
+a {
+  text-decoration: none;
+  color: #f2f2f2;
+}
+
+ul{
+  text-align:center;
+  margin: 10px 0;
+}
 .red {
   background-color: #f00;
 }
@@ -19,6 +28,7 @@ html {
 }
 
 button {
+  margin-top: 10px;
   padding: 20px;
   border-radius: 5px;
   color: #f2f2f2;
@@ -26,7 +36,24 @@ button {
   letter-spacing: 2px;
 }
 
-a {
-  text-decoration: none;
-  color: #f2f2f2;
+.resturantName{
+  text-align:left;
+  margin-left: 10px;
+}
+
+.rating{
+  text-align:center;
+  box-shadow:0px 0px 1px 1px #f00;
+  padding: 5px;
+  margin: 10px 0;
+}
+
+.categoryTypes{
+  box-shadow: 0px 2px 1px 1px #c9c9c9;
+  margin: 4px 10px;
+  margin-bottom: 5px;
+  width:35%;
+  padding: 5px;
+  text-align: center;
+  display: inline-block;
 }
