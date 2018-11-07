@@ -1,5 +1,6 @@
 import React from 'react'
 import placeholder from '../imgs/placeholder.svg'
+import star from '../imgs/star.png'
 
 const Result = props => {
   const { restaurant: r } = props
@@ -12,7 +13,7 @@ const Result = props => {
     <div>
       <div
         style={{
-          height: '400px',
+          height: '350px',
           overflow: 'hidden',
           backgroundImage: `url('${image}')`,
           backgroundRepeat: 'no-repeat',
@@ -27,12 +28,12 @@ const Result = props => {
           style={{ maxWidth: '100%' }}
         /> */}
       </div>
-      <div>
-        <h2>{r.name || 'Name'}</h2>
-        <p>{r.rating || 'Rating'}</p>
-        <p>Category</p>
+      <div className="description">
+        <h2 className="resturantName">{r.name || 'Name'}</h2>
+        <p className="rating">{r.rating || 'Rating'} <img src={star} alt="gold star" width="50"/></p>
+        <p className="category">Category</p>
         <ul>
-          {r.types ? r.types.map(type => <li key={type}>{type}</li>) : 'Types'}
+          {r.types ? r.types.map(type => <li  className="categoryTypes" key={type}>{type}</li>) : 'Types'}
         </ul>
       </div>
 
