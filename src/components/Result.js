@@ -31,6 +31,10 @@ const Result = props => {
       <div className="description">
         <h2 className="resturantName">{r.name || 'Name'}</h2>
         <p className="rating">{r.rating || 'Rating'} <img src={star} alt="gold star" width="50"/></p>
+        <p className="category">Category</p>
+        <ul>
+          {r.types ? r.types.map(type => <li  className="categoryTypes" key={type}>{type}</li>) : 'Types'}
+        </ul>
       </div>
 
       <button type="button" className="red center capital">
